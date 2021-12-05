@@ -1,0 +1,74 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+Pre Condition	User created, logged in and project created
+Post Condition	Close all browsers
+Tags	CRUD, Issue, Create, Read, Update, Delete
+
+#******************* Common Variables ********************
+
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+IssueName = 
+Other_IssueName = 
+Empty = " " (only spacebar)
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# Positive Test
+
+Create issue
+	Navigate to a project
+	Select issues from the sidebar on the left
+	Select new issue
+	Enter issue name IssueName
+	Select create issue
+	Verify issue is created
+
+Update name of issue
+	Navigate to an issue
+	Select the pen icon on the right of the issue name
+	Enter issue name Other_IssueName
+	Select save changes
+	Verify name is chagned
+
+Create second issue with previous updated name
+	Navigate to a project
+	Select issues from the sidebar on the left
+	Select new issue
+	Enter issue name IssueName
+	Select save changes
+	Verify issue name is chagned
+
+Delete first issue
+	Select an issue
+	Select the pen icon on the right of the issue name
+	Select delete issue
+	Select confirm
+	Verify issue is deleted
+
+Create another issue with the same name
+	Navigate to a project
+	Select issues from the sidebar on the left
+	Select new issue
+	Enter issue name IssueName
+	Select create issue
+	Verify issue is created
+
+# Negative test
+
+Create issue with empty (space only) name
+	Navigate to a project
+	Select issues from the sidebar on the left
+	Select new issue
+	Enter issue name Empty
+	Select create issue
+	Verify page contains error this field is required

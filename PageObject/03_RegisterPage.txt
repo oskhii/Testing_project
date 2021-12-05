@@ -1,0 +1,125 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+Documentation	User Registration Test scenario with verification with valid credentials.
+
+Pre Condition	Open Browser
+Post Condition	Close All Browsers
+Tags	Registration
+
+#******************* Common Variables ********************
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+Login_URL= https://gitlab.com/users/sign_up
+UserName = 
+UserEmail = 
+UserPassword = 
+Invalid_Username = 
+Invalid_Email = 
+Invalid_Password = 
+Other_Valid_UserName = 
+Other_Valid_Email = 
+Empty = 
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# Positive Test
+ 
+Register user with valid username, email, password and complete the recaptcha
+	Navigate to login page LOGIN_URL
+	Input username UserName
+	Input email UserEmail 
+	Input password UserPassword
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain welcome page
+
+# Negative Test
+
+Register user with same above username
+	Navigate to login page LOGIN_URL
+	Input username UserName
+	Input email Other_Valid_Email
+	Input password UserPassword
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain error username already in use 
+
+Register user with same above email address
+	Navigate to login page LOGIN_URL
+	Input username Other_Valid_UserName
+	Input email UserEmail
+	Input password UserPassword
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain error email address already in use 
+
+Register with invalid username
+	Navigate to login page LOGIN_URL
+	Input username Invalid_Username
+	Input valid email Other_Valid_Email
+	Input password UserPassword
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain error invalid username
+
+Register with empty username
+	Navigate to login page LOGIN_URL
+	Input username Empty
+	Input valid email Other_Valid_Email
+	Input password UserPassword
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain error this field is required
+	
+Register with invalid password
+	Navigate to login page LOGIN_URL
+	Input username Other_Valid_UserName
+	Input email Other_Valid_Email
+	Input password Invalid_Password
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain this field is required
+
+Register with empty password
+	Navigate to login page LOGIN_URL
+	Input username Other_Valid_UserName
+	Input email Other_Valid_Email
+	Input password Empty
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain this field is required
+
+Register with invalid email
+	Navigate to login page LOGIN_URL
+	Input username Other_Valid_UserName
+	Input email Invalid_Email
+	Input password UserPassword
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain error invalid email address
+
+Register with empty email
+	Navigate to login page LOGIN_URL
+	Input username Other_Valid_UserName
+	Input email Empty
+	Input password UserPassword
+	Complete the recaptcha
+	Submit registration form
+	Verify page should contain error this field is required
+
+Register without recaptcha
+	Navigate to login page LOGIN_URL
+	Input username Other_Valid_UserName
+	Input email Other_Valid_Email
+	Input password UserPassword
+	Do not complete the recaptcha
+	Submit registration form
+	Verify page should contain error recaptcha is required

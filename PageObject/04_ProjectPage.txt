@@ -1,0 +1,129 @@
+
+#******************** Settings ************************
+
+*** Settings ***
+
+Documentation	Project Test scenario. CRUD Operation: Create, Read, Update, Delete
+
+Pre Condition	User created and logged in
+Post Condition	Close All Browsers
+Tags 	Project, Create, Read, Update, Delete
+
+#******************* Common Variables ********************
+
+
+*** Variables ***
+
+# NOTE: Please Remove your login credential before uploading Assignments
+
+Create_URL = https://gitlab.com/projects/new 
+UserName = 
+UserEmail = 
+UserPassword = 
+ProjetctName = 
+SlugName = 
+Other_Valid_ProjectName = 
+Other_Valid_SlugName = 
+Empty = 
+
+#******************** Test Cases *************************
+
+*** Test Case ***
+
+# Positive Test
+
+Create blank project
+	Navigate to page Create_URL
+	Select create blank project
+	Enter project name ProjetctName
+	Enter slug name SlugName
+	Select create project
+	Verify project should be created
+	Verify page should contain ProjetctName was successfully created
+
+Create template project 
+	Navigate to Create_URL
+	Select create from template
+	Enter project name Other_Valid_ProjectName
+	Enter slug name Other_Valid_SlugName
+	Select create project
+	Verify project should be created
+	Verify page should contain ProjetctName was successfully created
+
+Update name of project
+	Navigate to settings of created project
+	Edit project name to Other_Valid_ProjectName
+	Select save changes
+	Verify name is chagned
+	Verify page contains name successfully updated
+
+Delete project
+	Navigate to settings of created project
+	Select expand on Advanced settings
+	Select Delete Project
+	Enter the exactly what is displayed under "Please type the following to confirm:"
+	Select delete project
+	Verify project is deleted
+	Verify page contains project successfully deleted
+
+# Negative Test
+
+Create a blank project with the previous same name
+	Navigate to page Create_URL
+	Select create blank project
+	Enter project name ProjetctName
+	Enter slug name SlugName
+	Select create project
+	Verify page should contain error ProjetctName is already in use
+
+Create a blank project with the previous same slug name
+	Navigate to page Create_URL
+	Select create blank project
+	Enter project name Other_Valid_ProjectName
+	Enter slug name SlugName
+	Select create project
+	Verify page should contain error SlugName is already in use
+
+Create a blank project with empty project name
+	Navigate to page Create_URL
+	Select create blank project
+	Enter project name Empty
+	Enter slug name Other_Valid_SlugName
+	Select create project
+	Verify page should contain error this field is required
+
+Create a blank project with empty slug name
+	Navigate to page Create_URL
+	Select create blank project
+	Enter project name Other_Valid_ProjectName
+	Enter slug name Empty
+	Select create project
+	Verify page should contain error this field is required
+
+Update the name to another name in use
+	Navigate to settings of created project
+	Edit project name to another name already in use
+	Select save changes
+	Verify page contains error name already in use
+
+Update the name to empty name
+	Navigate to settings of created project
+	Edit project name to Empty
+	Select save changes
+	Verify page contains error this field is required
+
+Delete project with wrong confirmation input
+	Navigate to settings of created project
+	Select expand on Advanced settings
+	Select delete project
+	Enter other input than what is displayed under "Please type the following to confirm:"
+	Select delete project
+	Verify page contains error invalid input
+
+Delete project with empty confirmation input
+	Navigate to settings of created project
+	Select expand on Advanced settings
+	Select delete project
+	Enter conirmation input Empty
+	Select delete project
+	Verify page contains error this field is required
